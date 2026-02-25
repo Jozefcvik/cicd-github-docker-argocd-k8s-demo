@@ -9,6 +9,8 @@ on:
 
 env:
   PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
+  DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
   GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
   GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
@@ -56,6 +58,8 @@ jobs:
 
       - name: Update Kubernetes manifests
         run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"          
           sed -i "s|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/static-site-argocd:${{ github.sha }}|g" k8s/static-site-argocd.yaml
 
       - name: Commit updated manifests
