@@ -8,8 +8,9 @@ on:
       - 'k8s/**'
 
 env:
-  DOCKERHUB_USERNAME: ${{ secrets.DOCKERHUB_USERNAME }}
-  DOCKERHUB_TOKEN: ${{ secrets.DOCKERHUB_TOKEN }}
+  PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+  GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
+  GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
 jobs:
 
@@ -55,7 +56,7 @@ jobs:
 
       - name: Update Kubernetes manifests
         run: |
-          sed -i "s|image:.*|image: $DOCKERHUB_USERNAME/static-site-argocd:${{ github.sha }}|g" k8s/static-site-argocd.yaml
+          sed -i "s|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/static-site-argocd:${{ github.sha }}|g" k8s/static-site-argocd.yaml
 
       - name: Commit updated manifests
         run: |
