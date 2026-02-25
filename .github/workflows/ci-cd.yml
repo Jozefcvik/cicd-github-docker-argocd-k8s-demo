@@ -73,7 +73,8 @@ jobs:
           git config user.name ${{ secrets.GIT_USERNAME }}
           git config user.email ${{ secrets.GIT_EMAIL }}
           git remote set-url origin https://${{ secrets.GIT_USERNAME }}:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
-          git add k8s/static-site-argocd.yaml
+          git pull origin main
+          git add k8s/static-site-argocd.yaml      
           git commit -m "Update image to ${{ github.sha }}"
           git push origin main
 
