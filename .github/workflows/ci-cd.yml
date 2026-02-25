@@ -70,13 +70,11 @@ jobs:
 
       - name: Commit updated manifests
         run: |
-          git config user.name ${{ secrets.GIT_USERNAME }}
-          git config user.email ${{ secrets.GIT_EMAIL }}
-          git remote set-url origin https://${{ secrets.GIT_USERNAME }}:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
-          git pull origin main
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
           git add k8s/static-site-argocd.yaml      
           git commit -m "Update image to ${{ github.sha }}"
-          git push origin main
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }} HEAD:main
 
 #  deploy:
 #   needs: build-and-push
