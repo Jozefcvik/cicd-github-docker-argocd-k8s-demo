@@ -61,9 +61,10 @@ jobs:
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
+          git remote set-url origin https://Jozefcvik:${{ secrets.PERSONAL_ACCESS_TOKEN }}@github.com/${{ github.repository }}.git
           git add k8s/static-site-argocd.yaml
           git commit -m "Update image to ${{ github.sha }}"
-          git push
+          git push origin main
 
 #  deploy:
 #   needs: build-and-push
