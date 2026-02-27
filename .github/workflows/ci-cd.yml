@@ -8,11 +8,8 @@ on:
       - 'k8s/**'
 
 env:
-  PERSONAL_ACCESS_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
   DOCKERHUB_USERNAME: ${{ secrets.DOCKER_USERNAME }}
   DOCKERHUB_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-  GIT_USERNAME: ${{ secrets.GIT_USERNAME }}
-  GIT_EMAIL: ${{ secrets.GIT_EMAIL }}
 
 jobs:
 
@@ -56,17 +53,9 @@ jobs:
       - name: Push Docker image
         run: docker push ${{ secrets.DOCKER_USERNAME }}/static-site-argocd:${{ github.sha }}
 
-
       - name: Update Kubernetes manifests
         run: |      
-          git config user.name ${{ secrets.GIT_USERNAME }}
-          git config user.email ${{ secrets.GIT_EMAIL }}
-          git pull origin main
-          pwd
-          cat k8s/static-site-argocd.yaml
-          pwd
           sed -i "s|image:.*|image: ${{ secrets.DOCKER_USERNAME }}/static-site-argocd:${{ github.sha }}|g" k8s/static-site-argocd.yaml
-          cat k8s/static-site-argocd.yaml
 
       - name: Commit updated manifests
         run: |
@@ -75,14 +64,3 @@ jobs:
           git add k8s/static-site-argocd.yaml      
           git commit -m "Update image to ${{ github.sha }} [skip ci]" || exit 0
           git push origin HEAD:main
-
-#  deploy:
-#   needs: build-and-push
-#    runs-on: ubuntu-latest
-#    steps:
-#      - name: Checkout code
-#        uses: actions/checkout@v4
-#
-#      - name: ArgoCD Sync
-#        run: |
-#          argocd app sync static-site-app --auth-token ${{ secrets.ARGOCD_TOKEN }} --server ${{ secrets.ARGOCD_SERVER }}
