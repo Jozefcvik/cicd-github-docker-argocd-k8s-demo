@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: static-site-argocd
-          image: jozefcvik/static-site-argocd:19274eb3ea9a6f9dd03e349e3c5009ae4b88751f
+          image: jozefcvik/static-site-argocd:9a00bdbddb7b231cc93c513f16bc8e7c8cf922fa
           ports:
             - containerPort: 80
 ---
