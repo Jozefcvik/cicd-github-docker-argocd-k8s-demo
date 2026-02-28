@@ -1,5 +1,9 @@
 # 🚀 CI/CD Demo – GitHub + Docker + ArgoCD + Kubernetes
 
+
+![CI/CD pipeline workflow diagram](cicd-github-docker-argocd-k8s-demo.png)
+
+
 This is a simple end-to-end **GitOps CI/CD demo** showing how to:
 - ✅ Lint HTML & CSS with GitHub Actions
 - ✅ Build & Push Docker image to Docker Hub
