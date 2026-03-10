@@ -41,7 +41,7 @@ metadata:
     kubernetes.io/ingress.class: nginx
 spec:
   rules:
-    - host: static-site-argocd.jozefcvik.com
+    - host: static-site-argocd.local
       http:
         paths:
           - path: /
